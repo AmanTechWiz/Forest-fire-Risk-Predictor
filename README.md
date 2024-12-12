@@ -9,10 +9,6 @@ The **Forest Fire Risk Predictor** is a web application built using Flask that p
 - **Scalable**: Ready for deployment on local or cloud platforms.
 - **Lightweight**: Built with Python and Flask for efficient performance.
 
-## Application Preview
-
-![Application UI](image-link-placeholder)
-
 ## Installation
 
 Follow these steps to set up and run the project on your local machine:
@@ -55,24 +51,10 @@ The application will run locally on `http://127.0.0.1:5000/`.
 3. Click on the `Predict Forest Fire Risk` button.
 4. View the predicted Fire Weather Index (FWI).
 
-## File Structure
-```
-forest-fire-risk-predictor/
-|
-├── static/              # Static files (CSS, JS, Images)
-├── templates/           # HTML templates for Flask app
-├── application.py       # Main Flask application file
-├── scaler.pkl           # Pre-trained scaler model
-├── ridge.pkl            # Pre-trained Ridge regression model
-├── lasso.pkl            # Pre-trained Lasso regression model
-├── requirements.txt     # Python dependencies
-└── README.md            # Project documentation
-```
-
 ## Technologies Used
 - **Backend**: Flask, Python
 - **Frontend**: HTML, CSS
-- **Machine Learning**: Ridge Regression
+- **Machine Learning model**: Ridge Regression
 
 ## Dataset
 The dataset contains weather observations and FWI components, including:
