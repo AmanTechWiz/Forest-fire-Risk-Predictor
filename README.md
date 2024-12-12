@@ -1,5 +1,7 @@
 # Forest Fire Risk Predictor
 
+## Deployed link : https://tinyurl.com/fireforestpredict
+
 ## Overview
 The **Forest Fire Risk Predictor** is a web application built using Flask that predicts the Fire Weather Index (FWI) based on various weather-related inputs. It leverages machine learning to assist in estimating the risk of forest fires, providing a valuable tool for environmental monitoring and risk management.
 
