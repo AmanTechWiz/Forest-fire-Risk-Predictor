@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Risk Predictor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Forest Fire Risk Predictor</h1>
+        <form action="/predictdata" method="POST" class="mt-4" id="fireForm">
+            <div class="form-group">
+                <label for="Temperature">Temperature (°C)</label>
+                <input type="number" step="0.01" class="form-control" id="Temperature" name="Temperature" placeholder="Enter Temperature" value="25">
+            </div>
+            <div class="form-group">
+                <label for="RH">Relative Humidity (%)</label>
+                <input type="number" step="0.01" class="form-control" id="RH" name="RH" placeholder="Enter Relative Humidity" value="50">
+            </div>
+            <div class="form-group">
+                <label for="Ws">Wind Speed (km/h)</label>
+                <input type="number" step="0.01" class="form-control" id="Ws" name="Ws" placeholder="Enter Wind Speed" value="10">
+            </div>
+            <div class="form-group">
+                <label for="Rain">Rain (mm)</label>
+                <input type="number" step="0.01" class="form-control" id="Rain" name="Rain" placeholder="Enter Rainfall" value="0">
+            </div>
+            <div class="form-group">
+                <label for="FFMC">FFMC (Fine Fuel Moisture Code)</label>
+                <input type="number" step="0.01" class="form-control" id="FFMC" name="FFMC" placeholder="Enter FFMC" value="85">
+            </div>
+            <div class="form-group">
+                <label for="DMC">DMC (Duff Moisture Code)</label>
+                <input type="number" step="0.01" class="form-control" id="DMC" name="DMC" placeholder="Enter DMC" value="50">
+            </div>
+            <div class="form-group">
+                <label for="ISI">ISI (Initial Spread Index)</label>
+                <input type="number" step="0.01" class="form-control" id="ISI" name="ISI" placeholder="Enter ISI" value="5">
+            </div>
+            <div class="form-group">
+                <label for="Classes">Classes (Binary: 0 or 1)</label>
+                <input type="number" step="1" class="form-control" id="Classes" name="Classes" placeholder="Enter Class (0 or 1)" value="0">
+            </div>
+            <div class="form-group">
+                <label for="Region">Region (1-2)</label>
+                <input type="number" step="1" class="form-control" id="Region" name="Region" placeholder="Enter Region (1 or 2)" value="1">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Start Prediction</button>
+                <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+            </div>
+        </form>
+
+        <!-- Added information about value ranges -->
+        <div class="mt-4 alert alert-info">
+            <h5>Value Ranges for Input:</h5>
+            <ul>
+                <li><strong>Temperature:</strong> Typically between 0°C and 40°C.</li>
+                <li><strong>Relative Humidity (RH):</strong> Between 10% and 100%.</li>
+                <li><strong>Wind Speed (Ws):</strong> Between 0 km/h and 50 km/h.</li>
+                <li><strong>Rain:</strong> Between 0 mm and 10 mm (higher values are rare).</li>
+                <li><strong>FFMC:</strong> Between 0 and 100 (higher values indicate drier conditions).</li>
+                <li><strong>DMC:</strong> Between 0 and 200 (higher values indicate drier conditions).</li>
+                <li><strong>ISI:</strong> Between 0 and 50 (higher values indicate higher spread rate).</li>
+                <li><strong>Classes:</strong> 0 = No Fire, 1 = Fire.</li>
+                <li><strong>Region:</strong> Enter a number from 1 or 2 (1 represents Bejaia region and 2 represents Sidi Bel-abbes region).</li>
+            </ul>
+        </div>
+
+        <!-- Display prediction result if available -->
+        {% if result is not none %}
+        <div class="mt-4 alert alert-success">
+            <h5>Prediction Result:</h5>
+            <p>{{ result }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearForm() {
+            document.querySelectorAll('#fireForm input').forEach(input => input.value = '');
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Risk Predictor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Forest Fire Risk Predictor</h1>
+        <form action="/predictdata" method="POST" class="mt-4" id="fireForm">
+            <div class="form-group">
+                <label for="Temperature">Temperature (°C)</label>
+                <input type="number" step="0.01" class="form-control" id="Temperature" name="Temperature" placeholder="Enter Temperature" value="25">
+            </div>
+            <div class="form-group">
+                <label for="RH">Relative Humidity (%)</label>
+                <input type="number" step="0.01" class="form-control" id="RH" name="RH" placeholder="Enter Relative Humidity" value="50">
+            </div>
+            <div class="form-group">
+                <label for="Ws">Wind Speed (km/h)</label>
+                <input type="number" step="0.01" class="form-control" id="Ws" name="Ws" placeholder="Enter Wind Speed" value="10">
+            </div>
+            <div class="form-group">
+                <label for="Rain">Rain (mm)</label>
+                <input type="number" step="0.01" class="form-control" id="Rain" name="Rain" placeholder="Enter Rainfall" value="0">
+            </div>
+            <div class="form-group">
+                <label for="FFMC">FFMC (Fine Fuel Moisture Code)</label>
+                <input type="number" step="0.01" class="form-control" id="FFMC" name="FFMC" placeholder="Enter FFMC" value="85">
+            </div>
+            <div class="form-group">
+                <label for="DMC">DMC (Duff Moisture Code)</label>
+                <input type="number" step="0.01" class="form-control" id="DMC" name="DMC" placeholder="Enter DMC" value="50">
+            </div>
+            <div class="form-group">
+                <label for="ISI">ISI (Initial Spread Index)</label>
+                <input type="number" step="0.01" class="form-control" id="ISI" name="ISI" placeholder="Enter ISI" value="5">
+            </div>
+            <div class="form-group">
+                <label for="Classes">Classes (Binary: 0 or 1)</label>
+                <input type="number" step="1" class="form-control" id="Classes" name="Classes" placeholder="Enter Class (0 or 1)" value="0">
+            </div>
+            <div class="form-group">
+                <label for="Region">Region (1-2)</label>
+                <input type="number" step="1" class="form-control" id="Region" name="Region" placeholder="Enter Region (1 or 2)" value="1">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Start Prediction</button>
+                <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+            </div>
+        </form>
+
+        <!-- Added information about value ranges -->
+        <div class="mt-4 alert alert-info">
+            <h5>Value Ranges for Input:</h5>
+            <ul>
+                <li><strong>Temperature:</strong> Typically between 0°C and 40°C.</li>
+                <li><strong>Relative Humidity (RH):</strong> Between 10% and 100%.</li>
+                <li><strong>Wind Speed (Ws):</strong> Between 0 km/h and 50 km/h.</li>
+                <li><strong>Rain:</strong> Between 0 mm and 10 mm (higher values are rare).</li>
+                <li><strong>FFMC:</strong> Between 0 and 100 (higher values indicate drier conditions).</li>
+                <li><strong>DMC:</strong> Between 0 and 200 (higher values indicate drier conditions).</li>
+                <li><strong>ISI:</strong> Between 0 and 50 (higher values indicate higher spread rate).</li>
+                <li><strong>Classes:</strong> 0 = No Fire, 1 = Fire.</li>
+                <li><strong>Region:</strong> Enter a number from 1 or 2 (1 represents Bejaia region and 2 represents Sidi Bel-abbes region).</li>
+            </ul>
+        </div>
+
+        <!-- Display prediction result if available -->
+        {% if result is not none %}
+        <div class="mt-4 alert alert-success">
+            <h5>Prediction Result:</h5>
+            <p>{{ result }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearForm() {
+            document.querySelectorAll('#fireForm input').forEach(input => input.value = '');
+        }
+    </script>
+</body>
+</html>
